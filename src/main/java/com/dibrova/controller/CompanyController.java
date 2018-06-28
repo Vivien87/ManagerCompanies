@@ -22,6 +22,7 @@ public class CompanyController {
      @GetMapping(Endpoints.COMPANIES)
      public ResponseEntity<Object> findAllCompanies() throws CompanyNotFoundException {
          ResponseEntity<Object> companiesResponseEntity = new ResponseEntity<>(companyService.findAllCompanies(),HttpStatus.OK);
+
          return companiesResponseEntity;
      }
 
@@ -38,6 +39,11 @@ public class CompanyController {
     logger.info("Company successfully save");
    return new ResponseEntity<>(company,HttpStatus.OK);
 
+ }
+ @GetMapping(Endpoints.COMPANY+"delete/{id}")
+ public String deleteCompany(@PathVariable int id){
+         companyService.deleteCompanyById(id);
+   return Endpoints.COMPANIES;
  }
 
 
