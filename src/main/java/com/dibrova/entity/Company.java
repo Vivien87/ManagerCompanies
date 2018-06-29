@@ -13,6 +13,11 @@ public class Company extends  AbstractModelClass {
     public Company() {
         super();
     }
+    public Company(String name) {
+        super();
+        this.nameCompany=name;
+
+    }
 
 
     public String getNameCompany() {

@@ -1,6 +1,7 @@
 package com.dibrova.controller;
 
 
+import com.dibrova.dao.CompanyDao;
 import com.dibrova.entity.Company;
 import com.dibrova.exception.CompanyNotFoundException;
 import com.dibrova.service.CompanyService;
@@ -10,41 +11,61 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CompanyController {
 
-     @Autowired
+    @Autowired
     CompanyService companyService;
-     private static Logger logger = LoggerFactory.getLogger(Company.class);
+    @Autowired
+    CompanyDao companyDao;
 
-     @GetMapping(Endpoints.COMPANIES)
-     public ResponseEntity<Object> findAllCompanies() throws CompanyNotFoundException {
-         ResponseEntity<Object> companiesResponseEntity = new ResponseEntity<>(companyService.findAllCompanies(),HttpStatus.OK);
+    private static Logger logger = LoggerFactory.getLogger(Company.class);
 
-         return companiesResponseEntity;
-     }
+    @GetMapping("/all")
+    public ResponseEntity<Object> findAllCompanies() throws CompanyNotFoundException {
+        List<Company> companies = companyService.findAllCompanies();
+      return new ResponseEntity<>(companies,HttpStatus.OK);
 
-@PostMapping(Endpoints.COMPANIES+"/ save")
- public ResponseEntity<Object> saveOrUpdateCompany(@RequestBody Company company, @RequestParam("id") String id, @RequestParam("nameCompany")String nameCompany){
 
-   if(!id.isEmpty()){
-       company=(Company)companyService.findUserById(Integer.parseInt(id));
-   }else {
-       company = new Company();
-   }
-    company.setNameCompany(nameCompany);
-    company = companyService.addCompany(company);
-    logger.info("Company successfully save");
-   return new ResponseEntity<>(company,HttpStatus.OK);
+    }
+    @GetMapping(Endpoints.COMPANY)
+    public Company retrieveCompany(@PathVariable int id) {
+        Optional<Company> company = companyDao.findById(id);
+        if(!company.isPresent())
+            throw  new CompanyNotFoundException("id-"+ id);
+        return company.get();
+    }
 
- }
- @GetMapping(Endpoints.COMPANY+"delete/{id}")
- public String deleteCompany(@PathVariable int id){
-         companyService.deleteCompanyById(id);
-   return Endpoints.COMPANIES;
- }
+    @PostMapping(Endpoints.COMPANIES)
+    public ResponseEntity<Object> createCompany(@RequestBody Company company) {
+        Company savedCompany = companyService.addCompany(company);
+        logger.info("Successfully creted");
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedCompany.getId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
+
+    @PutMapping(Endpoints.COMPANY)
+    public ResponseEntity<Object> updateCompany(@RequestBody Company company, @PathVariable int id) {
+        Optional<Company> companyOptional = companyDao.findById(id);
+        if (!companyOptional.isPresent()) return ResponseEntity.notFound().build();
+        company.setId(id);
+        companyDao.save(company);
+        logger.info(id+" "+ "sucssesfully updated");
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(Endpoints.COMPANY + "delete/{id}")
+    public void deleteCompany(@PathVariable int id) {
+        companyService.deleteCompanyById(id);
+        logger.info(id + "was delete");
+    }
 
 
 }

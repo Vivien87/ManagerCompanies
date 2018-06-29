@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface CompanyService {
     Company findUserById(Integer id);
     List<Company> findAllCompanies();

@@ -6,11 +6,10 @@ import javax.persistence.*;
 public class AbstractModelClass {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     Integer id;
 
-    @Version
-    private Integer version;
+
 
 
 
@@ -23,13 +22,7 @@ public class AbstractModelClass {
         this.id = id;
     }
 
-    public Integer getVersion() {
-        return version;
-    }
 
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
 
 
 ;
