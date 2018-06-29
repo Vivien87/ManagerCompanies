@@ -6,12 +6,8 @@ import javax.persistence.*;
 public class AbstractModelClass {
 
     @Id
-    @GeneratedValue
-    Integer id;
-
-
-
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
 
     public Integer getId() {
         return this.id;

@@ -1,4 +1,4 @@
-package com.dibrova;
+package com.dibrova.service;
 
 import com.dibrova.dao.CompanyDao;
 import com.dibrova.entity.Company;

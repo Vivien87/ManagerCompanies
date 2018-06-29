@@ -15,7 +15,7 @@
  create table user
   (
      id integer not null,
-    nameUser varchar(255) not null,
+    name varchar(255) not null,
      lastName varchar (255) not null,
    dateOfBirth TIMESTAMP not null,
      position varchar(255) not null ,

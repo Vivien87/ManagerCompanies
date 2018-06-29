@@ -27,7 +27,7 @@ public class CompanyController {
 
     private static Logger logger = LoggerFactory.getLogger(Company.class);
 
-    @GetMapping("/all")
+    @GetMapping(Endpoints.COMPANIES)
     public ResponseEntity<Object> findAllCompanies() throws CompanyNotFoundException {
         List<Company> companies = companyService.findAllCompanies();
       return new ResponseEntity<>(companies,HttpStatus.OK);
