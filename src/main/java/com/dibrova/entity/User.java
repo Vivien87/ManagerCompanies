@@ -11,7 +11,7 @@ import java.util.Date;
 
 
 @Entity
-public class User extends AbstractModelClass  implements Serializable {
+public class User extends AbstractModelClass implements Serializable {
 
     //ім’я, прізвище, дата народження, посада
 
@@ -22,18 +22,18 @@ public class User extends AbstractModelClass  implements Serializable {
     public User() {
     }
 
-    public User(int id ,String name, String lastName, Date dateOfBirth, Position positionUser) {
+    public User(int id, String name, String lastName, Date dateOfBirth, Position positionUser) {
         super();
-        this.id=id;
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.positionUser = positionUser;
     }
 
-    public User(int id ,String name, String lastName, Date dateOfBirth) {
+    public User(int id, String name, String lastName, Date dateOfBirth) {
         super();
-        this.id=id;
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;

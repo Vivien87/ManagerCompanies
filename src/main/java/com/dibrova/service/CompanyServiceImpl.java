@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class CompanyServiceImpl implements CompanyService {
-           @Autowired
-          CompanyDao companyDao;
+    @Autowired
+    CompanyDao companyDao;
 
     @Override
     public Company findUserById(Integer id) {
@@ -22,11 +23,11 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Company> findAllCompanies() {
-      List<Company> companies = companyDao.findAll();
+        List<Company> companies = companyDao.findAll();
 
-      if(companies.isEmpty()){
-          throw new CompanyNotFoundException("No one company exists");
-      }
+        if (companies.isEmpty()) {
+            throw new CompanyNotFoundException("No one company exists");
+        }
 
         return companies;
     }

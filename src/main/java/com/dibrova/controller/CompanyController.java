@@ -30,15 +30,16 @@ public class CompanyController {
     @GetMapping(Endpoints.COMPANIES)
     public ResponseEntity<Object> findAllCompanies() throws CompanyNotFoundException {
         List<Company> companies = companyService.findAllCompanies();
-      return new ResponseEntity<>(companies,HttpStatus.OK);
+        return new ResponseEntity<>(companies, HttpStatus.OK);
 
 
     }
+
     @GetMapping(Endpoints.COMPANY)
     public Company retrieveCompany(@PathVariable int id) {
         Optional<Company> company = companyDao.findById(id);
-        if(!company.isPresent())
-            throw  new CompanyNotFoundException("id-"+ id);
+        if (!company.isPresent())
+            throw new CompanyNotFoundException("id-" + id);
         return company.get();
     }
 
@@ -57,7 +58,7 @@ public class CompanyController {
         if (!companyOptional.isPresent()) return ResponseEntity.notFound().build();
         company.setId(id);
         companyDao.save(company);
-        logger.info(id+" "+ "sucssesfully updated");
+        logger.info(id + " " + "sucssesfully updated");
         return ResponseEntity.noContent().build();
     }
 

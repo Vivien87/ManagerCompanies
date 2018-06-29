@@ -11,9 +11,9 @@ import java.io.Serializable;
 
 
 @Entity
-public class Department extends  AbstractModelClass implements Serializable {
+public class Department extends AbstractModelClass implements Serializable {
 
-private String nameDepartment;
+    private String nameDepartment;
 
     public String getName() {
         return nameDepartment;

@@ -7,16 +7,17 @@ import javax.persistence.*;
 
 @Table
 @Entity
-public class Company extends  AbstractModelClass {
+public class Company extends AbstractModelClass {
 
- private String nameCompany;
+    private String nameCompany;
 
     public Company() {
         super();
     }
+
     public Company(String name) {
         super();
-        this.nameCompany=name;
+        this.nameCompany = name;
 
     }
 

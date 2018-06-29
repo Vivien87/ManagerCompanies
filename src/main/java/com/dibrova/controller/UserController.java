@@ -19,42 +19,46 @@ import java.util.Optional;
 public class UserController {
 
 
-     @Autowired
-     private UserDao userDao;
+    @Autowired
+    private UserDao userDao;
 
-     Logger log =LoggerFactory.getLogger(UserController.class);
-     @GetMapping(Endpoints.USERS)
-     public List<User> findAllUsers() {
-         return userDao.findAll();
-     }
-     @GetMapping(Endpoints.USER)
-     public User findUser(@PathVariable int id) {
-         Optional<User> user = userDao.findById(id);
+    Logger log = LoggerFactory.getLogger(UserController.class);
 
-         if(!user.isPresent()) throw new UserNotFoundException("id-"+id);
-         return user.get();
-     }
+    @GetMapping(Endpoints.USERS)
+    public List<User> findAllUsers() {
+        return userDao.findAll();
+    }
 
-     @DeleteMapping(Endpoints.USER)
-     public void deleteStudent(@PathVariable int id){
-         userDao.deleteById(id);
-     }
-      @PostMapping(Endpoints.USER_CREATE)
-     public ResponseEntity<Object> createUser(@RequestBody User user){
+    @GetMapping(Endpoints.USER)
+    public User findUser(@PathVariable int id) {
+        Optional<User> user = userDao.findById(id);
 
-         user = userDao.save(user);
-         log.info("User was save in H2");
-         return new ResponseEntity<>(user,HttpStatus.OK);
-     }
-     @PutMapping(Endpoints.USER)
-     public ResponseEntity<Object> updateUser(@RequestBody User user,@PathVariable int id) {
+        if (!user.isPresent()) throw new UserNotFoundException("id-" + id);
+        return user.get();
+    }
 
-         Optional<User> userOptional = userDao.findById(id);
-         if(!userOptional.isPresent()) return  ResponseEntity.notFound().build();
+    @DeleteMapping(Endpoints.USER)
+    public void deleteStudent(@PathVariable int id) {
+        userDao.deleteById(id);
+    }
 
-         user.setId(id);
-         userDao.save(user);
+    @PostMapping(Endpoints.USER_CREATE)
+    public ResponseEntity<Object> createUser(@RequestBody User user) {
 
-         return ResponseEntity.noContent().build();
-     }
+        user = userDao.save(user);
+        log.info("User was save in H2");
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PutMapping(Endpoints.USER)
+    public ResponseEntity<Object> updateUser(@RequestBody User user, @PathVariable int id) {
+
+        Optional<User> userOptional = userDao.findById(id);
+        if (!userOptional.isPresent()) return ResponseEntity.notFound().build();
+
+        user.setId(id);
+        userDao.save(user);
+
+        return ResponseEntity.noContent().build();
+    }
 }

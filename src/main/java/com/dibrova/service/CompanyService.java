@@ -8,8 +8,11 @@ import java.util.List;
 
 public interface CompanyService {
     Company findUserById(Integer id);
+
     List<Company> findAllCompanies();
-    Company addCompany (Company company);
+
+    Company addCompany(Company company);
+
     void deleteCompanyById(int id);
 
 }
