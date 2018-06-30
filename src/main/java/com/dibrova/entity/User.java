@@ -1,9 +1,6 @@
 package com.dibrova.entity;
 
-import com.dibrova.entity.type.Position;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.Type;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,36 +8,39 @@ import java.util.Date;
 
 
 @Entity
+@Table(name="user")
 public class User extends AbstractModelClass implements Serializable {
 
     //ім’я, прізвище, дата народження, посада
 
     private String name;
 
-    private String lastName;
+    private String last_Name;
+
+    @Temporal(TemporalType.DATE)
+    private Date date_Of_Birth;
+
 
     public User() {
     }
 
-    public User(int id, String name, String lastName, Date dateOfBirth, Position positionUser) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.positionUser = positionUser;
-    }
+//    public User(int id, String name, String lastName, Date dateOfBirth, Position positionUser) {
+//        super();
+//        this.id = id;
+//        this.name = name;
+//        this.last_Name = lastName;
+//        this.date_Of_Birth = dateOfBirth;
+//        this.position_User = positionUser;
+//    }
 
     public User(int id, String name, String lastName, Date dateOfBirth) {
         super();
         this.id = id;
         this.name = name;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
+        this.last_Name = lastName;
+        this.date_Of_Birth = dateOfBirth;
     }
 
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
 
     public String getName() {
         return name;
@@ -51,34 +51,31 @@ public class User extends AbstractModelClass implements Serializable {
     }
 
     public String getLastName() {
-        return lastName;
+        return last_Name;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.last_Name = lastName;
     }
 
     public Date getDateOfBirth() {
-        return dateOfBirth;
+        return date_Of_Birth;
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+        this.date_Of_Birth = dateOfBirth;
     }
 
 
-    @Enumerated(EnumType.STRING)
-    @Type(type = "org.hibernate.type.EnumType")
-    private Position positionUser;
 
-//    @ManyToOne
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JoinColumn(name = "department_id",
-//            foreignKey = @ForeignKey(name = "DEPARTMENT_ID"))
-//    private Department department;
-//
-//
-//    @ManyToOne
-//    @JoinColumn(name="company_id",referencedColumnName = "id")
-//    private Company company;
+//    @Enumerated(EnumType.STRING)
+//    @Type(type = "org.hibernate.type.EnumType")
+//    private Position position_User;
+
+//    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",orphanRemoval = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Department  department;
+
+
 }

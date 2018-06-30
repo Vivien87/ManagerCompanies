@@ -1,15 +1,19 @@
 package com.dibrova.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@Table
+
 @Entity
+@Table(name="company")
 public class Company extends AbstractModelClass {
 
-    private String nameCompany;
+    private String name_Company;
 
     public Company() {
         super();
@@ -17,17 +21,17 @@ public class Company extends AbstractModelClass {
 
     public Company(String name) {
         super();
-        this.nameCompany = name;
+        this.name_Company = name;
 
     }
 
 
     public String getNameCompany() {
-        return nameCompany;
+        return name_Company;
     }
 
     public void setNameCompany(String nameCompany) {
-        this.nameCompany = nameCompany;
+        this.name_Company = name_Company;
     }
 
 //    @OneToMany
@@ -35,4 +39,12 @@ public class Company extends AbstractModelClass {
 //    @JoinColumn(name = "user_id",
 //            foreignKey = @ForeignKey(name = "USER_ID"))
 //    private User user;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "company", fetch = FetchType.LAZY,orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Department> departments = new HashSet<>();
+
+
+
+
 }

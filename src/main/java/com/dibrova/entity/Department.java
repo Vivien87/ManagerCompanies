@@ -1,37 +1,41 @@
 package com.dibrova.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
+@Table(name="department")
 public class Department extends AbstractModelClass implements Serializable {
 
-    private String nameDepartment;
+    private String name_Department;
 
     public String getName() {
-        return nameDepartment;
+        return name_Department;
     }
 
-    public void setName(String nameDepartment) {
-        this.nameDepartment = nameDepartment;
+    public void setName(String name_Department) {
+        this.name_Department = name_Department;
     }
-//    @ManyToOne
-//    @OnDelete(action = OnDeleteAction.CASCADE)
+
+    @ManyToOne
 //    @JoinColumn(name = "company_id",
 //            foreignKey = @ForeignKey(name = "COMPANY_ID"))
-//    private Company company;
-//
-//
-//    @ManyToOne
-//    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference
+    private Company company;
+
+
+
 //    @JoinColumn(name = "user_id",
-//            foreignKey = @ForeignKey(name = "USER_ID"))
-//    private User user;
+//            referencedColumnName ="id" )
+@OneToMany(cascade = CascadeType.ALL, mappedBy = "department", fetch = FetchType.LAZY,orphanRemoval = true)
+@JsonManagedReference
+private Set<User> user=new HashSet<>();
 }
