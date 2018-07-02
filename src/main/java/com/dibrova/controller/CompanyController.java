@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,7 +30,7 @@ public class CompanyController {
 
     private static Logger logger = LoggerFactory.getLogger(Company.class);
 
-    @GetMapping(Endpoints.COMPANIES)
+    @GetMapping(value = Endpoints.COMPANIES , produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findAllCompanies() throws CompanyNotFoundException {
         List<Company> companies = companyService.findAllCompanies();
         return new ResponseEntity<>(companies, HttpStatus.OK);
@@ -37,7 +38,7 @@ public class CompanyController {
 
     }
 
-    @GetMapping(Endpoints.COMPANY)
+    @GetMapping(value=Endpoints.COMPANY, produces = MediaType.APPLICATION_JSON_VALUE)
     public Company retrieveCompany(@PathVariable int id) {
         Optional<Company> company = companyDao.findById(id);
         if (!company.isPresent())
@@ -45,7 +46,7 @@ public class CompanyController {
         return company.get();
     }
 
-    @PostMapping(Endpoints.COMPANIES)
+    @PostMapping(value =Endpoints.COMPANIES , produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> createCompany(@RequestBody Company company) {
         Company savedCompany = companyService.addCompany(company);
         logger.info("Successfully creted");
@@ -54,7 +55,7 @@ public class CompanyController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping(Endpoints.COMPANY)
+    @PutMapping(value=Endpoints.COMPANY, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> updateCompany(@RequestBody Company company, @PathVariable int id) {
         Optional<Company> companyOptional = companyDao.findById(id);
         if (!companyOptional.isPresent()) return ResponseEntity.notFound().build();
@@ -64,11 +65,10 @@ public class CompanyController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(Endpoints.COMPANY + "delete/{id}")
+    @GetMapping(value=Endpoints.COMPANY + "delete/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteCompany(@PathVariable int id) {
         companyService.deleteCompanyById(id);
         logger.info(id + "was delete");
     }
-
 
 }

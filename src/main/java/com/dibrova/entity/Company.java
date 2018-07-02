@@ -13,7 +13,8 @@ import java.util.Set;
 @Table(name="company")
 public class Company extends AbstractModelClass {
 
-    private String name_Company;
+    @Column(name = "NAME", nullable = false)
+    private String name;
 
     public Company() {
         super();
@@ -21,17 +22,17 @@ public class Company extends AbstractModelClass {
 
     public Company(String name) {
         super();
-        this.name_Company = name;
+        this.name = name;
 
     }
 
 
     public String getNameCompany() {
-        return name_Company;
+        return name;
     }
 
     public void setNameCompany(String nameCompany) {
-        this.name_Company = name_Company;
+        this.name = name;
     }
 
 //    @OneToMany
@@ -44,7 +45,22 @@ public class Company extends AbstractModelClass {
     @JsonManagedReference
     private Set<Department> departments = new HashSet<>();
 
+    public void setDepartments(Set<Department> departments) {
+        this.departments.clear();
+        if (departments != null) {
+            this.departments.addAll(departments);
+        }
+    }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public Set<Department> getDepartments() {
+        return departments;
+    }
 }

@@ -36,7 +36,7 @@ public class UserServiceTest {
     public void setUp() {
         testDate = Date.valueOf(LocalDate.of(1987, 1, 1));
         expectedAlluserslistSize = 8;
-        expectedUser = new User(2, "Vivi", "Dibrova", testDate);
+        expectedUser = new User(2, "Vivi", "Dibrova", testDate,"Doctor");
     }
 
     @Test

@@ -15,19 +15,18 @@ import java.util.Set;
 @Table(name="department")
 public class Department extends AbstractModelClass implements Serializable {
 
-    private String name_Department;
+    @Column(name = "NAME", nullable = false)
+    private String name;
 
     public String getName() {
-        return name_Department;
+        return name;
     }
 
     public void setName(String name_Department) {
-        this.name_Department = name_Department;
+        this.name = name_Department;
     }
 
     @ManyToOne
-//    @JoinColumn(name = "company_id",
-//            foreignKey = @ForeignKey(name = "COMPANY_ID"))
     @JsonBackReference
     private Company company;
 
@@ -37,5 +36,35 @@ public class Department extends AbstractModelClass implements Serializable {
 //            referencedColumnName ="id" )
 @OneToMany(cascade = CascadeType.ALL, mappedBy = "department", fetch = FetchType.LAZY,orphanRemoval = true)
 @JsonManagedReference
-private Set<User> user=new HashSet<>();
+private Set<User> users=new HashSet<>();
+
+
+    public void setUsers(Set<User> users) {
+        this.users.clear();
+        if (users != null) {
+            this.users.addAll(users);
+        }
+    }
+    public Set<User> getUsers() {
+        return users;
+    }
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+
+
+
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "deptId=" + id +
+                ", deptName='" + name + '\'' +
+                '}';
+    }
 }
