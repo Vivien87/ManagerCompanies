@@ -20,6 +20,8 @@ public class User extends AbstractModelClass implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date date_Of_Birth;
 
+    @Column(name="position_id")
+    private String position;
 
     public User() {
     }
