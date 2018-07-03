@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
-
+/**
+ * @author Volodymyr Dibrova
+ */
 
 @Entity
 @Table(name="USER")
@@ -69,6 +71,21 @@ public class User extends AbstractModelClass implements Serializable {
         this.date_Of_Birth = dateOfBirth;
     }
 
+    public List<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<Department> departments) {
+        this.departments = departments;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
 
 
 }

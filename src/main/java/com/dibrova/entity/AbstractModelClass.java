@@ -1,7 +1,9 @@
 package com.dibrova.entity;
 
 import javax.persistence.*;
-
+/**
+ * @author Volodymyr Dibrova
+ */
 @MappedSuperclass
 public class AbstractModelClass {
 

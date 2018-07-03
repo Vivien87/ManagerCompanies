@@ -8,7 +8,9 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-
+/**
+ * @author Volodymyr Dibrova
+ */
 @Entity
 @Table(name="company")
 public class Company extends AbstractModelClass {

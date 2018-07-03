@@ -9,14 +9,16 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * @author Volodymyr Dibrova
+ */
 @Service
 public class CompanyServiceImpl implements CompanyService {
     @Autowired
     CompanyDao companyDao;
 
     @Override
-    public Company findUserById(Integer id) {
+    public Company findCompanyById(Integer id) {
         Optional<Company> company = companyDao.findById(id);
         return company.orElseGet(company::get);
     }

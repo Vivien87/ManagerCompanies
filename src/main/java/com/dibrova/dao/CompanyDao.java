@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.PersistenceContext;
 import java.util.List;
-
+/**
+ * @author Volodymyr Dibrova
+ */
 @Repository
 @PersistenceContext
 public interface CompanyDao extends JpaRepository<Company,Integer> {

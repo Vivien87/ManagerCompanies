@@ -1,13 +1,14 @@
 package com.dibrova.service;
 
 import com.dibrova.entity.Company;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+/**
+ * @author Volodymyr Dibrova
+ */
 
 public interface CompanyService {
-    Company findUserById(Integer id);
+    Company findCompanyById(Integer id);
 
     List<Company> findAllCompanies();
 

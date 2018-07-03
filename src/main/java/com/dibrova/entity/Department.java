@@ -7,23 +7,20 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
+/**
+ * @author Volodymyr Dibrova
+ */
 
 @Entity
 @Table(name="department")
 public class Department extends AbstractModelClass implements Serializable {
-    @Column(name="name")
-    private String name;
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name_Department) {
-        this.name = name_Department;
-    }
+
 
 
     @ManyToOne
@@ -38,11 +35,21 @@ public class Department extends AbstractModelClass implements Serializable {
     @JsonBackReference
     private Company company;
 
+//    @OneToMany(cascade = CascadeType.ALL,mappedBy = "department", fetch = FetchType.LAZY,orphanRemoval = true)
+//    @JsonManagedReference
+//    private List<DepartmentCategory> departmentCategories = new ArrayList<>();
+
+    @Column(name = "department_category")
+    @Enumerated(EnumType.STRING)
+    private DepartmentCategory departmentCategory;
 
 
-//    @JoinColumn(name = "user_id",
-//            referencedColumnName ="id" )
-/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "department", fetch = FetchType.LAZY,orphanRemoval = true)
-@JsonManagedReference
-private Set<User> user=new HashSet<>();*/
+
+    public DepartmentCategory getDepartmentCategory() {
+        return departmentCategory;
+    }
+
+    public void setDepartmentCategory(DepartmentCategory departmentCategory) {
+        this.departmentCategory = departmentCategory;
+    }
 }
