@@ -4,13 +4,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Entity
-@Table(name="user")
+@Table(name="USER")
 public class User extends AbstractModelClass implements Serializable {
 
 
@@ -28,20 +26,22 @@ public class User extends AbstractModelClass implements Serializable {
     @JsonManagedReference
     private List<Department> departments = new ArrayList<>();
 
-    @Column(name="position_id")
-    private String positionType;
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "user", fetch = FetchType.LAZY,orphanRemoval = true)
+    @JsonManagedReference
+     private Position position ;
+
 
     public User() {
     }
 
 
-    public User(int id, String name, String lastName, Date dateOfBirth, String position) {
+    public User(int id, String name, String lastName, Date dateOfBirth) {
         super();
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.date_Of_Birth = dateOfBirth;
-        this.positionType = position;
+
     }
 
 
@@ -67,13 +67,6 @@ public class User extends AbstractModelClass implements Serializable {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.date_Of_Birth = dateOfBirth;
-    }
-    public String getPosition() {
-        return positionType;
-    }
-
-    public void setPosition(String position) {
-        this.positionType = position;
     }
 
 

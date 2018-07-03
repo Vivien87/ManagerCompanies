@@ -35,11 +35,7 @@ public class Company extends AbstractModelClass {
         this.name = name;
     }
 
-//    @OneToMany
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JoinColumn(name = "user_id",
-//            foreignKey = @ForeignKey(name = "USER_ID"))
-//    private User user;
+
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "company", fetch = FetchType.LAZY,orphanRemoval = true)
     @JsonManagedReference
