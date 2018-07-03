@@ -14,8 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name="department")
 public class Department extends AbstractModelClass implements Serializable {
-
-    @Column(name = "NAME", nullable = false)
+    @Column(name="name")
     private String name;
 
     public String getName() {
@@ -26,7 +25,16 @@ public class Department extends AbstractModelClass implements Serializable {
         this.name = name_Department;
     }
 
+
     @ManyToOne
+    @JoinColumn(name = "user_id",
+            foreignKey = @ForeignKey(name = "USER_ID"))
+    @JsonBackReference
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id",
+            foreignKey = @ForeignKey(name = "COMPANY_ID"))
     @JsonBackReference
     private Company company;
 
@@ -34,37 +42,7 @@ public class Department extends AbstractModelClass implements Serializable {
 
 //    @JoinColumn(name = "user_id",
 //            referencedColumnName ="id" )
-@OneToMany(cascade = CascadeType.ALL, mappedBy = "department", fetch = FetchType.LAZY,orphanRemoval = true)
+/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "department", fetch = FetchType.LAZY,orphanRemoval = true)
 @JsonManagedReference
-private Set<User> users=new HashSet<>();
-
-
-    public void setUsers(Set<User> users) {
-        this.users.clear();
-        if (users != null) {
-            this.users.addAll(users);
-        }
-    }
-    public Set<User> getUsers() {
-        return users;
-    }
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-
-
-
-
-    @Override
-    public String toString() {
-        return "Department{" +
-                "deptId=" + id +
-                ", deptName='" + name + '\'' +
-                '}';
-    }
+private Set<User> user=new HashSet<>();*/
 }

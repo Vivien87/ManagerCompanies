@@ -1,49 +1,48 @@
 package com.dibrova.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
 @Table(name="user")
 public class User extends AbstractModelClass implements Serializable {
 
-    //ім’я, прізвище, дата народження, посада
-    @Column(name = "NAME", nullable = false)
-    private String name;
 
-    @Column(name = "LASTNAME", nullable = false)
-    private String lastname;
+
+    //ім’я, прізвище, дата народження, посада
+    @Column(name="name")
+    private String name;
+    @Column(name="lastname")
+    private String lastName;
 
     @Temporal(TemporalType.DATE)
-    @Column(name="DATE_OF_BIRTH", nullable = false)
     private Date date_Of_Birth;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user", fetch = FetchType.LAZY,orphanRemoval = true)
+    @JsonManagedReference
+    private List<Department> departments = new ArrayList<>();
+
     @Column(name="position_id")
-    private String position;
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
-    private Department  department;
-
+    private String positionType;
 
     public User() {
     }
+
 
     public User(int id, String name, String lastName, Date dateOfBirth, String position) {
         super();
         this.id = id;
         this.name = name;
-        this.lastname = lastName;
+        this.lastName = lastName;
         this.date_Of_Birth = dateOfBirth;
-        this.position = position;
+        this.positionType = position;
     }
-
-
 
 
     public String getName() {
@@ -55,11 +54,11 @@ public class User extends AbstractModelClass implements Serializable {
     }
 
     public String getLastName() {
-        return lastname;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastname = lastName;
+        this.lastName = lastName;
     }
 
     public Date getDateOfBirth() {
@@ -69,44 +68,13 @@ public class User extends AbstractModelClass implements Serializable {
     public void setDateOfBirth(Date dateOfBirth) {
         this.date_Of_Birth = dateOfBirth;
     }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public Date getDate_Of_Birth() {
-        return date_Of_Birth;
-    }
-
-    public void setDate_Of_Birth(Date date_Of_Birth) {
-        this.date_Of_Birth = date_Of_Birth;
-    }
-
     public String getPosition() {
-        return position;
+        return positionType;
     }
 
     public void setPosition(String position) {
-        this.position = position;
+        this.positionType = position;
     }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    //    @Enumerated(EnumType.STRING)
-//    @Type(type = "org.hibernate.type.EnumType")
-//    private Position position_User;
-
-//    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",orphanRemoval = true)
 
 
 
